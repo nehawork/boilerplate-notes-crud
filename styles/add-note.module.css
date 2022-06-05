@@ -1,0 +1,18 @@
+.container{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    height: 182px;
+}
+
+.container textarea{
+    width: 65%;
+    margin: 0 auto;
+    resize: none;
+}
+
+.container button{
+    width: fit-content;
+    margin: 1rem auto;
+    cursor: pointer;
+}
