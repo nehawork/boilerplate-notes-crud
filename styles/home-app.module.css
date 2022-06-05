@@ -1,10 +1,11 @@
 .container {
   padding: 0 2rem;
+  height: 100%;
 }
 
 .main {
-  min-height: 100vh;
-  padding: 4rem 0;
+  height: 100%;
+  overflow: hidden;
 }
 
 .main h1 {
@@ -12,4 +13,8 @@
   border-bottom: 1px solid gray;
   padding-bottom: 1rem;
   height: 60px;
+}
+
+.notes_wrapper {
+  height: calc(100% - 60px);
 }

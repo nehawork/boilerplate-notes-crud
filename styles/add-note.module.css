@@ -1,18 +1,23 @@
-.container{
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    height: 182px;
+.container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  height: 182px;
 }
 
-.container textarea{
-    width: 65%;
-    margin: 0 auto;
-    resize: none;
+.container textarea {
+  width: 65%;
+  margin: 0 auto;
+  resize: none;
 }
 
-.container button{
-    width: fit-content;
-    margin: 1rem auto;
-    cursor: pointer;
+.buttons_wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 1rem 0;
+}
+
+.buttons_wrapper button {
+  margin-left: 1rem;
+  cursor: pointer;
 }

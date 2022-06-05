@@ -1,17 +1,38 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "../styles/add-note.module.css";
 import { useNotes } from "./context/note-context";
+import Note from "./types/note";
 
-const AddNote = (): JSX.Element => {
-  const { addNote } = useNotes();
+type Props = {
+  isUpdate?: Note;
+  setIsUpdate(note?: Note): void;
+};
+
+const AddNote = ({ isUpdate, setIsUpdate }: Props): JSX.Element => {
+  const { addNote, updateNote } = useNotes();
 
   const [noteText, setNoteText] = useState<string>("");
 
   const onAddNote = (): void => {
-    addNote(noteText).then((resp) => {
-      if (resp) setNoteText("");
-    });
+    if (isUpdate && isUpdate.id) {
+      updateNote({ id: isUpdate.id, text: noteText }).then((resp) => {
+        if (resp) {
+          setIsUpdate(undefined);
+          setNoteText("");
+        }
+      });
+    } else {
+      addNote(noteText).then((resp) => {
+        if (resp) setNoteText("");
+      });
+    }
   };
+
+  useEffect(() => {
+    if (isUpdate && isUpdate.id) {
+      setNoteText(isUpdate.text);
+    }
+  }, [isUpdate]);
 
   return (
     <div className={styles.container}>
@@ -21,7 +42,21 @@ const AddNote = (): JSX.Element => {
         rows={8}
         placeholder="Type text here"
       />
-      <button onClick={onAddNote}>Add Note</button>
+      <div className={styles.buttons_wrapper}>
+        <button onClick={onAddNote}>
+          {isUpdate && isUpdate.id ? "Update" : "Add"} Note
+        </button>
+        {isUpdate && isUpdate.id && (
+          <button
+            onClick={() => {
+              setIsUpdate(undefined);
+              setNoteText("");
+            }}
+          >
+            Cancel
+          </button>
+        )}
+      </div>
     </div>
   );
 };

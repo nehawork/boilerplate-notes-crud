@@ -1,18 +1,23 @@
 import DisplayNote from "./note";
 import styles from "../styles/list-notes.module.css";
-import { useState } from "react";
-import Note from "./types/note";
 import { useNotes } from "./context/note-context";
+import Note from "./types/note";
 
-const ListNotes = (): JSX.Element => {
-  const {notes} = useNotes();
+const ListNotes = ({
+    notesToBeUpdate,
+  onUpdate,
+}: {
+    notesToBeUpdate?: Note;
+  onUpdate(note: Note | undefined): void;
+}): JSX.Element => {
+  const { notes } = useNotes();
 
   return (
     <div className={styles.container}>
       <ul>
         {notes.map((note) => (
           <li key={note.id}>
-            <DisplayNote note={note} />
+            <DisplayNote isUpdatingNote={notesToBeUpdate ? notesToBeUpdate.id === note.id : false} note={note} onUpdate={onUpdate} />
           </li>
         ))}
       </ul>

@@ -5,6 +5,7 @@ import NoteContextType from "../types/note-context-type";
 const NotesContext = React.createContext<NoteContextType>({
   notes: [],
   addNote: () => Promise.reject("should not happen"),
+  updateNote: () => Promise.reject("should not happen"),
   deleteNote: () => Promise.reject("should not happen"),
 });
 
@@ -45,9 +46,25 @@ const useNotesProvider = (): NoteContextType => {
     return Promise.resolve(false);
   };
 
+  const updateNote = (note: Note): Promise<boolean> => {
+    if (note.text.trim() === "") {
+      alert("Add some text to save!");
+    } else {
+      const updateIndex = notes.findIndex((e) => e.id === note.id);
+      if (updateIndex !== -1) {
+        notes[updateIndex].text = note.text;
+        setNotes([...notes]);
+        return Promise.resolve(true);
+      }
+    }
+
+    return Promise.resolve(false);
+  };
+
   return {
     notes,
     addNote,
+    updateNote,
     deleteNote,
   };
 };
